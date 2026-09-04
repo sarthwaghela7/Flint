@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAFAF8;
+  --color-ink: #0A0A0A;
+  --color-accent: #FF5A1F;
+  --color-meet: #202124;
+  --color-meetpanel: #2a2b2e;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-logo: "Press Start 2P", cursive;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-90px); opacity: 0; }
+}
+
+.animate-float-up {
+  animation: float-up 1.6s ease-out forwards;
+}

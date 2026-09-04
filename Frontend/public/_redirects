@@ -1,0 +1,5 @@
+# Proxy API calls to the backend (set the real backend URL for production)
+# /api/* https://your-backend-host.com/api/:splat 200
+
+# SPA fallback — every other path serves the React app
+/* /index.html 200

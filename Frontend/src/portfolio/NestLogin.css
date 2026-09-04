@@ -1,0 +1,9 @@
+.nest-login{min-height:100vh;display:flex;flex-direction:column}
+.nest-login-main{flex:1;display:grid;place-items:center;padding:clamp(40px,6vw,90px) 20px;background-color:#fff;background-image:linear-gradient(#e4e4dc 1px,transparent 1px),linear-gradient(90deg,#e4e4dc 1px,transparent 1px);background-size:48px 48px}
+.nest-login-card{width:100%;max-width:460px;padding:clamp(28px,4vw,44px);border:1px solid var(--ink);background:#fff;box-shadow:14px 14px 0 var(--orange)}
+.nest-login-card h1{margin-bottom:16px;font-size:clamp(32px,4vw,44px);letter-spacing:-.05em;line-height:1.02}
+.nest-login-card h1 em{color:var(--orange);font-style:normal;font-weight:500}
+.nest-login-intro{margin-bottom:30px;color:var(--muted);font-size:14px;line-height:1.7}
+.nest-login-form{padding:0;border:0;box-shadow:none}
+.nest-login-form .button{justify-self:stretch}
+.nest-login-note{display:flex;align-items:center;gap:7px;margin:24px 0 0;color:#85857d;font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
