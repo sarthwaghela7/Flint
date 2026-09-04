@@ -1,16 +1,34 @@
-# React + Vite
+# Flint — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The entire Flint web app, deployed as a single static site:
 
-Currently, two official plugins are available:
+| Route | What it is |
+|---|---|
+| `/` | Portfolio / landing site |
+| `/services` | Services catalog |
+| `/nest` | Team login (rule-based, frontend-only) |
+| `/app/*` | Nest mail client (login-gated) |
+| `/app/vct/*` | VCT video conferencing |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Deploy (Render)
 
-## React Compiler
+Use the included [`render.yaml`](render.yaml) blueprint, or configure manually:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Root Directory:** `Frontend` *(when deploying from the repo root)*
+- **Build Command:** `npm install && npm run build`
+- **Publish Directory:** `dist`
+- **Redirects/Rewrites** (in order):
+  1. `/api/*` → `https://<backend>.onrender.com/api/*` — Rewrite (proxy)
+  2. `/ws/*` → `https://<backend>.onrender.com/ws/*` — Rewrite (proxy, VCT WebSocket)
+  3. `/*` → `/index.html` — Rewrite (SPA fallback — required for `/nest` etc.)
 
-## Expanding the Oxlint configuration
+## Backend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Lives in the [flint_video_conferencing](https://github.com/sarthwaghela7/flint_video_conferencing) repo — FastAPI serving `/api/*` (mail + meetings + contact) and `/ws/signaling/*` (WebRTC signaling).
+
+## Local dev
+
+```sh
+npm install
+npm run dev   # vite proxies /api to http://localhost:8000
+```
