@@ -1,9 +1,11 @@
+import { MonitorUp } from 'lucide-react'
 import VideoTile from './VideoTile'
 
-export default function ScreenShareView({ presenterTile, tiles, pinnedId, onPin, reactionsByPeer = {} }) {
+export default function ScreenShareView({ presenterTile, tiles, onPin, reactionsByPeer = {} }) {
   return (
-    <div className="flex h-full min-h-0 flex-col gap-3 p-3 sm:flex-row sm:p-4">
-      <div className="min-h-0 flex-1 overflow-hidden rounded-xl bg-black">
+    <div className="flex h-full min-h-0 flex-col gap-2 p-3">
+      {/* Shared screen — dominant, never scrolls */}
+      <div className="relative min-h-0 flex-1 overflow-hidden rounded-xl bg-black ring-1 ring-white/5">
         <video
           autoPlay
           playsInline
@@ -12,13 +14,16 @@ export default function ScreenShareView({ presenterTile, tiles, pinnedId, onPin,
           }}
           className="h-full w-full object-contain"
         />
-        <div className="relative -mt-8 ml-2 w-fit rounded-md bg-black/45 px-2 py-1 text-xs text-white">
+        <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-md bg-black/50 px-2.5 py-1 text-[0.7rem] text-white">
+          <MonitorUp size={12} className="text-accent" />
           {presenterTile.name} is presenting
         </div>
       </div>
-      <div className="flex shrink-0 gap-3 overflow-x-auto sm:w-52 sm:flex-col sm:overflow-y-auto sm:overflow-x-visible">
+
+      {/* Participant strip — tiles scale down, no scrolling */}
+      <div className="flex h-24 shrink-0 gap-2">
         {tiles.map((tile) => (
-          <div key={tile.id} className="w-32 shrink-0 sm:w-auto">
+          <div key={tile.id} className="aspect-video h-full shrink-0">
             <VideoTile {...tile} onPin={() => onPin(tile.id)} reactions={reactionsByPeer[tile.id]} />
           </div>
         ))}

@@ -18,7 +18,6 @@ export default function MeetingRoom() {
   const [localStream, setLocalStream] = useState(null)
   const [muted, setMuted] = useState(false)
   const [cameraOn, setCameraOn] = useState(true)
-  const [handRaised, setHandRaised] = useState(false)
   const [captionsOn, setCaptionsOn] = useState(false)
   const [screenSharing, setScreenSharing] = useState(false)
   const [screenStream, setScreenStream] = useState(null)
@@ -26,6 +25,7 @@ export default function MeetingRoom() {
   const [panel, setPanel] = useState(null) // 'chat' | 'participants' | null
   const [showInvite, setShowInvite] = useState(true)
   const [waitingRoom, setWaitingRoom] = useState([])
+  const [recording, setRecording] = useState(false)
   const [elapsed, setElapsed] = useState('00:00')
 
   const { peers, chatMessages, reactions, sendChat, sendReaction, broadcastState } = useWebRTC({
@@ -147,17 +147,15 @@ export default function MeetingRoom() {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-meet text-white">
+    <div className="flex h-screen flex-col overflow-hidden bg-meet text-white">
       <MeetingHeader
         title={participant?.title}
         code={code}
         elapsed={elapsed}
         participantCount={tiles.length}
-        captionsOn={captionsOn}
-        onToggleCaptions={() => setCaptionsOn((v) => !v)}
         onOpenChat={() => setPanel(panel === 'chat' ? null : 'chat')}
         onOpenParticipants={() => setPanel(panel === 'participants' ? null : 'participants')}
-        recording={false}
+        recording={recording}
       />
 
       <div className="flex min-h-0 flex-1">
@@ -166,7 +164,6 @@ export default function MeetingRoom() {
             <ScreenShareView
               presenterTile={{ id: 'screen', name: participant?.name, stream: screenStream }}
               tiles={tiles}
-              pinnedId={pinnedId}
               onPin={setPinnedId}
               reactionsByPeer={reactionsByPeer}
             />
@@ -191,7 +188,7 @@ export default function MeetingRoom() {
         <ParticipantsPanel
           open={panel === 'participants'}
           onClose={() => setPanel(null)}
-          participants={tiles.map((t) => ({ id: t.id, name: t.name, is_host: t.id === participant?.id && participant?.isHost }))}
+          participants={tiles.map((t) => ({ id: t.id, name: t.name, muted: t.muted, is_host: t.id === participant?.id && participant?.isHost }))}
           waitingRoom={waitingRoom}
           isHost={!!participant?.isHost}
           onMute={() => {}}
@@ -204,15 +201,17 @@ export default function MeetingRoom() {
         muted={muted}
         cameraOn={cameraOn}
         screenSharing={screenSharing}
-        handRaised={handRaised}
+        recording={recording}
         onToggleMic={toggleMic}
         onToggleCamera={toggleCamera}
         onToggleScreenShare={toggleScreenShare}
-        onToggleHand={() => setHandRaised((v) => !v)}
-        onReact={sendReaction}
-        onLeave={leave}
+        onToggleRecord={() => setRecording((v) => !v)}
+        onToggleChat={() => setPanel(panel === 'chat' ? null : 'chat')}
+        onToggleParticipants={() => setPanel(panel === 'participants' ? null : 'participants')}
         onToggleCaptions={() => setCaptionsOn((v) => !v)}
         captionsOn={captionsOn}
+        onReact={sendReaction}
+        onLeave={leave}
       />
 
       {showInvite && <InviteModal code={code} onClose={() => setShowInvite(false)} />}
