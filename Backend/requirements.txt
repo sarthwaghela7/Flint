@@ -1,9 +1,0 @@
-fastapi
-uvicorn[standard]
-IMAPClient
-aiosmtplib
-python-dotenv
-sqlalchemy
-psycopg2-binary
-pydantic
-pydantic-settings
