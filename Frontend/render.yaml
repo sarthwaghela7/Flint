@@ -1,6 +1,5 @@
 # Render blueprint for the merged Flint frontend (static site).
-# Replace YOUR-BACKEND with your backend service name (e.g. flint-backend)
-# before deploying — the proxy rules forward API and WebSocket traffic to it.
+# API and WebSocket traffic is proxied to the FastAPI backend service.
 services:
   - type: web
     name: flint-frontend
@@ -12,11 +11,11 @@ services:
       # REST API → FastAPI backend
       - type: rewrite
         source: /api/*
-        destination: https://YOUR-BACKEND.onrender.com/api/*
+        destination: https://flint-video-conferencing.onrender.com/api/*
       # WebSocket (VCT signaling) → FastAPI backend
       - type: rewrite
         source: /ws/*
-        destination: https://YOUR-BACKEND.onrender.com/ws/*
+        destination: https://flint-video-conferencing.onrender.com/ws/*
       # SPA fallback — React Router handles /nest, /services, /app, ...
       - type: rewrite
         source: /*

@@ -18,8 +18,8 @@ Use the included [`render.yaml`](render.yaml) blueprint, or configure manually:
 - **Build Command:** `npm install && npm run build`
 - **Publish Directory:** `dist`
 - **Redirects/Rewrites** (in order):
-  1. `/api/*` → `https://<backend>.onrender.com/api/*` — Rewrite (proxy)
-  2. `/ws/*` → `https://<backend>.onrender.com/ws/*` — Rewrite (proxy, VCT WebSocket)
+  1. `/api/*` → `https://flint-video-conferencing.onrender.com/api/*` — Rewrite (proxy)
+  2. `/ws/*` → `https://flint-video-conferencing.onrender.com/ws/*` — Rewrite (proxy, VCT WebSocket)
   3. `/*` → `/index.html` — Rewrite (SPA fallback — required for `/nest` etc.)
 
 ## Backend
